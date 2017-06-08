@@ -26,7 +26,6 @@ integer  :: i, ind(6), indv(6)
 		print *, "problem: not enough points"
 		call abort
 	else
-
 		indv(1:count(ind /= 0)) = pack(ind, ind /= 0)
 		! then use x(indv(1:3)) and energy(indv(1:3)) to calculate the 2nd derivative         
         me = 1.0_dp / second_derivative(x(indv(1:3)), energies(indv(1:3))) * hbar**2 / m0
