@@ -5,13 +5,14 @@ use constants, only : hbar, m0
 
 private
 
-public 
+public calc_eff_mass
 
 contains
 
 ! energy in [eV]
 ! effective mass without unit
 function calc_eff_mass(energies, point1, point2, position) result(me)
+implicit none    
 real(dp) , intent(in) :: energies(:)
 real(dp) , intent(in) :: point1(3), point2(3), position
 real(dp) :: x(size(energies)), vk(3), x0
@@ -25,11 +26,22 @@ integer  :: i, ind(6), indv(6)
 		call abort
 	else
 		indv(1:count(ind /= 0)) = pack(ind, ind /= 0)
-		! then use x(indv(1:3)) and energy(indv(1:3)) to calculate the 
-
-
+		! then use x(indv(1:3)) and energy(indv(1:3)) to calculate the 2nd derivative 
+        me = 1.0_dp / second_derivative(x(indv(1:3)), energies(indv(1:3))) * hbar**2 / 2.0_dp / m0
+    endif
 end function calc_eff_mass
 
+
+
+
+
+function second_derivative(x,y) result(d2)
+implicit none    
+real(dp) , intent(in) :: x(3), y(3)
+real(dp) :: d2 , h 
+    h = (x(3)-x(1)) / 2.0_dp
+    d2 = (y(3) - 2.0_dp*y(2) + y(1)) / h**2
+end function second_derivative
 
 
 
