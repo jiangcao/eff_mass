@@ -1,6 +1,6 @@
 FC90 = gfortran  
-CFLAG = -fbacktrace -c -g -ffree-line-length-500 
-CCFLAG= -g -fbacktrace
+CFLAG = -fbacktrace -c -g -ffree-line-length-500 -fcheck='all'
+CCFLAG= -g -fbacktrace -fcheck='all'
 CLIB = -llapack -lblas 
 
 # Modules directory
