@@ -19,7 +19,7 @@ real(dp) , intent(in) :: point1(3), point2(3), position
 real(dp) :: x(size(energies)), vk(3), x0, me
 integer  :: i, ind(6), indv(6)
 	vk = point2 - point1
-	x  = dble((/(i, i=1,size(energies))/)) / dble(size(x)) * sqrt(dot_product(vk,vk))
+	x  = dble((/(i, i=0,size(energies)-1)/)) / dble(size(x)-1) * sqrt(dot_product(vk,vk))
 	x0 = position * sqrt(dot_product(vk,vk))
 	ind= find_neighbor(x0,3,x)   ! find the neighbor points around the point we want the derivative
 	if (count(ind /= 0) < 3) then 
@@ -28,6 +28,9 @@ integer  :: i, ind(6), indv(6)
 	else
 		indv(1:count(ind /= 0)) = pack(ind, ind /= 0)
 		! then use x(indv(1:3)) and energy(indv(1:3)) to calculate the 2nd derivative         
+        print *,indv(1:3)
+        print *,x(indv(1:3))
+        print *,energies(indv(1:3))
         me = 1.0_dp / second_derivative(x(indv(1:3)), energies(indv(1:3))) * hbar**2 / m0
     endif
 end function calc_eff_mass

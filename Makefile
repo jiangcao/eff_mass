@@ -17,7 +17,7 @@ vpath %.o $(MODDIR)
 
 all: main
 
-main: main.f90 types.o constants.o eff_mass.o 
+main: main.f90 types.o constants.o input.o eff_mass.o 
 	    $(FC90) -o $@ $< $(MODDIR)/*.o -I$(MODDIR) $(CCFLAG) $(CLIB)
 
 
